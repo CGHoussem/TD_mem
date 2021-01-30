@@ -8,7 +8,7 @@ sudo sh run_benchmark.sh all
 
 Execution of 'load' benchmark:
 ```bash
-sudo sh run_benchmarksh.sh load
+sudo sh run_benchmark.sh load
 ```
 
 The modules that could be benchmarked:
