@@ -1,0 +1,7 @@
+# Ignore image
+*.png
+
+# Executables
+load_SSE_AVX
+store_SSE_AVX
+ntstore_SSE_AVX
