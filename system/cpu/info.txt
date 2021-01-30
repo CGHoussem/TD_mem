@@ -5,7 +5,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.239
+cpu MHz		: 3400.287
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -33,7 +33,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3401.927
+cpu MHz		: 3400.100
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -61,7 +61,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.073
+cpu MHz		: 3400.062
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -89,7 +89,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.333
+cpu MHz		: 3401.359
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -117,7 +117,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.033
+cpu MHz		: 3400.802
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -145,7 +145,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.244
+cpu MHz		: 3400.851
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -173,7 +173,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.920
+cpu MHz		: 3400.695
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8
@@ -201,7 +201,7 @@ model		: 142
 model name	: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
 stepping	: 10
 microcode	: 0xd6
-cpu MHz		: 3400.661
+cpu MHz		: 3400.059
 cache size	: 6144 KB
 physical id	: 0
 siblings	: 8

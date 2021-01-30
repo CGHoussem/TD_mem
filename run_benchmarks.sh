@@ -126,8 +126,24 @@ function copy_benchmark() {
 }
 
 function memcpy_benchmark() {
-	# TODO: memcpy benchmark
-	:
+	# ==================================
+	# ======== memcpy benchmark ========
+	# ==================================
+	# Building the "memcpy" benchmark binary
+	cd memcpy/
+	make clean
+	make
+	# Running "memcpy" benchmark on 128 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./memcpy $(( 128 * 2**10 )) 1000 > memcpy_L1.dat
+	# Running "memcpy" benchmark on 4 MiB of memoy (fits in L2 cache)
+	taskset -c 2 ./memcpy $(( 4 * 2**20 )) 500 > memcpy_L2.dat
+	# Running "memcpy" benchmark on 16 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./memcpy $(( 16 * 2**20 )) 100 > memcpy_L3.dat
+	# Running "memcpy" benchmark on 1 GiB of memoy (fits in DRAM)
+	taskset -c 4 ./memcpy $(( 1 * 2**30 )) 10 > memcpy_DRAM.dat
+	# TODO: Drawing the memcpy benchmark plot
+	cd ..
+
 }
 
 function pc_benchmark() {
