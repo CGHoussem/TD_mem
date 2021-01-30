@@ -4,10 +4,18 @@ clear
 # Stop NetworkManager
 systemctl stop NetworkManager
 
+# Gathering compilers versions
+if [ ! -d "compilers" ]; then
+	mkdir compilers
+fi
+gcc --version > compilers/gcc.txt
+clang --version > compilers/clang.txt
+ldd --version > compilers/glibc.txt
 
 # Setting up CPU frequencies
 cpupower frequency-set -g performance
-cpupower frequency-set -f 3.4GHz
+# the line below is commented because the governor 'userspace' isn't available!
+#cpupower frequency-set -f 3.4GHz
 
 # Creating directories
 if [ ! -d "system" ]; then
@@ -51,7 +59,16 @@ taskset -c 3 ./load_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > load_L3.da
 # Running "load" benchmark on 1 GiB of memory (fits in DRAM)
 taskset -c 4 ./load_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > load_DRAM.dat
 
-# Drawing the plots
-# TODO
-
+# Drawing the load benchmark plot
 cd ..
+gnuplot -c "plot_load_bw.gp" > load_bw.png
+
+# TODO: store benchmark
+# TODO: ntstore benchmark
+# TODO: copy benchmark
+# TODO: memcpy benchmark
+# TODO: pc benchmark
+# TODO: reduc benchmark
+# TODO: dotprod benchmark
+# TODO: triad benchmark
+
