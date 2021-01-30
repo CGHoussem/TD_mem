@@ -3,12 +3,12 @@
 ## Execution of the benchmark
 Execution of all benchmarks:
 ```bash
-sudo sh run_benchmark.sh all
+sudo sh run_benchmarks.sh all
 ```
 
 Execution of 'load' benchmark:
 ```bash
-sudo sh run_benchmark.sh load
+sudo sh run_benchmarks.sh load
 ```
 
 The modules that could be benchmarked:
