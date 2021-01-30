@@ -7,3 +7,4 @@ store/store_SSE_AVX
 ntstore/ntstore_SSE_AVX
 copy/copy_SSE_AVXX
 memcpy/memcpy
+pc/pc

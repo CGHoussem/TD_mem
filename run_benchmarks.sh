@@ -147,8 +147,20 @@ function memcpy_benchmark() {
 }
 
 function pc_benchmark() {
-	# TODO: pc benchmark
-	:
+	# ==================================
+	# ========== pc benchmark ==========
+	# ==================================
+	# Building the "pc" benchmark binary
+	cd pc/
+	make clean
+	make
+	# Running "pc" benchmark on 128 MiB of memoy
+	taskset -c 1 ./pc $(( 128 * 2**20 )) 100 > pc_DRAM_1.dat
+	# Running "pc" benchmark on 512 MiB of memoy
+	taskset -c 2 ./pc $(( 512 * 2**20 )) 100 > pc_DRAM_2.dat
+	# TODO: Drawing the pc benchmark plot
+
+	cd ..
 }
 
 function reduc_benchmark() {
