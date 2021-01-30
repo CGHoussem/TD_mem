@@ -10,6 +10,10 @@ Execution of 'load' benchmark:
 ```bash
 sudo sh run_benchmarks.sh load
 ```
+Execution of 'load' and 'store' benchmarks:
+```bash
+sudo sh run_benchmarks.sh load store
+```
 
 The modules that could be benchmarked:
 * load
