@@ -2,6 +2,7 @@
 
 ## Execution of the benchmark
 ```bash
-	sudo sh run_benchmark.sh
+sudo sh run_benchmark.sh
 ```
 
+>**WARNING**: YOU MUST HAVE ROOT PRIVILEGES!!
