@@ -2,8 +2,8 @@
 *.png
 
 # Executables
-load_SSE_AVX
-store_SSE_AVX
-ntstore_SSE_AVX
-copy_SSE_AVXX
-memcpy
+load/load_SSE_AVX
+store/store_SSE_AVX
+ntstore/ntstore_SSE_AVX
+copy/copy_SSE_AVXX
+memcpy/memcpy
