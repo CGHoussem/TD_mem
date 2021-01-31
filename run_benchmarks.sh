@@ -2,9 +2,11 @@
 clear
 
 # Stop NetworkManager
+echo "Stopping NetworkManager.."
 systemctl stop NetworkManager
 
 # Gathering compilers versions
+echo "Gathering compiler version.."
 if [ ! -d "compilers" ]; then
 	mkdir compilers
 fi
@@ -13,11 +15,13 @@ clang --version > compilers/clang.txt
 ldd --version > compilers/glibc.txt
 
 # Setting up CPU frequencies
+echo "Setting cpu frequency to PERFORMANCE.."
 cpupower frequency-set -g performance
 # the line below is commented because the governor 'userspace' isn't available!
 #cpupower frequency-set -f 3.4GHz
 
 # Creating directories
+echo "Gather system informations.."
 if [ ! -d "system" ]; then
 	mkdir system system/cpu system/caches system/memory
 else
@@ -206,10 +210,26 @@ function dp_benchmark() {
 }
 
 function triad_benchmark() {
-	# TODO: triad benchmark
-	:
+	# ==================================
+	# ======== triad benchmark =========
+	# ==================================
+	# Building the "triad" benchmark binary
+	cd triad/
+	make clean
+	make
+	# Running "triad" benchmark on 64 KiB of memory (fits in L1 cache)
+	taskset -c 1 ./triad_SSE_AVX $(( 64 * 2**10 )) 1000 | cut -d';' -f1,9 > triad_L1.dat
+	# Running "triad" benchmark on 512 KiB of memory (fits in L2 cache)
+	taskset -c 2 ./triad_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > triad_L2.dat
+	# Running "triad" benchmark on 2 MiB of memory (fits in L3 cache)
+	taskset -c 2 ./triad_SSE_AVX $(( 2 * 2**20 )) 500 | cut -d';' -f1,9 > triad_L3.dat
+	# Running "triad" benchmark on 7 MiB of memory (fits in DRAM)
+	taskset -c 2 ./triad_SSE_AVX $(( 7 * 2**20 )) 100 | cut -d';' -f1,9 > triad_DRAM.dat
+	
+	# Drawing the triad benchmark plot
+	cd ..
+	gnuplot -c "plot_triad_bw.gp" > triad_bw.png
 }
-
 
 # Main
 if [ $# -gt 0 ]; then
@@ -252,6 +272,8 @@ else
 fi
 
 # Restarting NetworkManager
+echo "Restarting Networkmanager.."
 systemctl start NetworkManager --now
+echo "Resetting cpu frequency to POWERSAVE.."
 cpupower frequency-set -g powersave
 
