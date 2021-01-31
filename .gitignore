@@ -1,6 +1,3 @@
-# Ignore image
-*.png
-
 # Executables
 load/load_SSE_AVX
 store/store_SSE_AVX
