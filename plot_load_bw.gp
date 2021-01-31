@@ -19,7 +19,7 @@ set xtic rotate by -45 scale 0
 
 set multiplot layout 2, 2 rowsfirst
 
-set yrange [0:100]
+set yrange [0:150]
 
 set title "L1 cache"
 plot "load/load_L1.dat" u 2:xtic(1) t "Intel Core i5-8250U"
