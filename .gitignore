@@ -8,3 +8,6 @@ ntstore/ntstore_SSE_AVX
 copy/copy_SSE_AVXX
 memcpy/memcpy
 pc/pc
+reduc/reduc_SSE_AVX
+dotprod/dotprod_SSE_AVX
+triad/triad_SSE_AVX
