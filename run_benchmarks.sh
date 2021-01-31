@@ -101,9 +101,9 @@ function ntstore_benchmark() {
 	make clean
 	make
 	# Running "ntstore" benchmark on 8 MiB of memoy
-	taskset -c 1 ./ntstore_SSE_AVX $(( 8 * 2**20 )) 1000 | cut -d';' -f1,9 > ntstore_DRAM_1.dat
+	taskset -c 1 ./ntstore_SSE_AVX $(( 8 * 2**20 )) 100 | cut -d';' -f1,9 > ntstore_DRAM_1.dat
 	# Running "ntstore" benchmark on 16 MiB of memoy
-	taskset -c 2 ./ntstore_SSE_AVX $(( 16 * 2**20 )) 1000 | cut -d';' -f1,9 > ntstore_DRAM_2.dat
+	taskset -c 2 ./ntstore_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > ntstore_DRAM_2.dat
 	# Drawing the ntstore benchmark plot
 	cd ..
 	gnuplot -c "plot_nstore_bw.gp" > ntstore_bw.png
@@ -122,9 +122,9 @@ function copy_benchmark() {
 	# Running "copy" benchmark on 512 KiB of memoy (fits in L2 cache)
 	taskset -c 2 ./copy_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > copy_L2.dat
 	# Running "copy" benchmark on 2 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./copy_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > copy_L3.dat
+	taskset -c 3 ./copy_SSE_AVX $(( 2 * 2**20 )) 500 | cut -d';' -f1,9 > copy_L3.dat
 	# Running "copy" benchmark on 7 MiB of memoy (fits in DRAM)
-	taskset -c 4 ./copy_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > copy_DRAM.dat
+	taskset -c 4 ./copy_SSE_AVX $(( 7 * 2**20 )) 500 | cut -d';' -f1,9 > copy_DRAM.dat
 	# Drawing the copy benchmark plot
 	cd ..
 	gnuplot -c "plot_copy_bw.gp" > copy_bw.png
@@ -143,9 +143,9 @@ function memcpy_benchmark() {
 	# Running "memcpy" benchmark on 512 KiB of memoy (fits in L2 cache)
 	taskset -c 2 ./memcpy $(( 512 * 2**10 )) 1000 > memcpy_L2.dat
 	# Running "memcpy" benchmark on 2 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./memcpy $(( 2 * 2**20 )) 1000 > memcpy_L3.dat
+	taskset -c 3 ./memcpy $(( 2 * 2**20 )) 500 > memcpy_L3.dat
 	# Running "memcpy" benchmark on 7 MiB of memoy (fits in DRAM)
-	taskset -c 4 ./memcpy $(( 7 * 2**20 )) 1000 > memcpy_DRAM.dat
+	taskset -c 4 ./memcpy $(( 7 * 2**20 )) 500 > memcpy_DRAM.dat
 	# TODO: Drawing the memcpy benchmark plot
 	cd ..
 
@@ -160,9 +160,9 @@ function pc_benchmark() {
 	make clean
 	make
 	# Running "pc" benchmark on 8 MiB of memoy
-	taskset -c 1 ./pc $(( 8 * 2**20 )) 1000 > pc_DRAM_1.dat
+	taskset -c 1 ./pc $(( 8 * 2**20 )) 500 > pc_DRAM_1.dat
 	# Running "pc" benchmark on 16 MiB of memoy
-	taskset -c 2 ./pc $(( 16 * 2**20 )) 1000 > pc_DRAM_2.dat
+	taskset -c 2 ./pc $(( 16 * 2**20 )) 500 > pc_DRAM_2.dat
 	# TODO: Drawing the pc benchmark plot
 
 	cd ..
@@ -202,9 +202,9 @@ function dp_benchmark() {
 	# Running "dotprod" benchmark on 512 KiB of memoy (fits in L2 cache)
 	taskset -c 2 ./dotprod_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > dotprod_L2.dat
 	# Running "dotprod" benchmark on 2 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./dotprod_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > dotprod_L3.dat
+	taskset -c 3 ./dotprod_SSE_AVX $(( 2 * 2**20 )) 500 | cut -d';' -f1,9 > dotprod_L3.dat
 	# Running "dotprod" benchmark on 7 MiB of memoy (fits in DRAM)
-	taskset -c 4 ./dotprod_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > dotprod_DRAM.dat
+	taskset -c 4 ./dotprod_SSE_AVX $(( 7 * 2**20 )) 500 | cut -d';' -f1,9 > dotprod_DRAM.dat
 	# Drawing the dotprod benchmark plot
 	cd ..
 	gnuplot -c "plot_dotprod_bw.gp" > dotprod_bw.png
@@ -275,6 +275,6 @@ fi
 # Restarting NetworkManager
 echo "Restarting Networkmanager.."
 systemctl start NetworkManager --now
+# Resetting CPU frequency settings
 echo "Resetting cpu frequency to POWERSAVE.."
 cpupower frequency-set -g powersave
-

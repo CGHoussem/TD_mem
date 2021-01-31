@@ -1,8 +1,8 @@
-     ntstore_SSE_16B; 16.621
-     ntstore_SSE_32B; 16.615
-     ntstore_SSE_64B; 16.618
-    ntstore_SSE_128B; 16.620
-     ntstore_AVX_32B; 16.620
-     ntstore_AVX_64B; 16.621
-    ntstore_AVX_128B; 16.621
-    ntstore_AVX_256B; 16.622
+     ntstore_SSE_16B; 16.259
+     ntstore_SSE_32B; 16.292
+     ntstore_SSE_64B; 16.279
+    ntstore_SSE_128B; 16.287
+     ntstore_AVX_32B; 16.296
+     ntstore_AVX_64B; 16.308
+    ntstore_AVX_128B; 16.316
+    ntstore_AVX_256B; 16.322

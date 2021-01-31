@@ -1,7 +1,7 @@
-     dotprod_SSE_16B; 14.691
-     dotprod_SSE_32B; 15.266
-     dotprod_SSE_64B; 15.300
-     dotprod_AVX_32B; 16.484
-     dotprod_AVX_64B; 16.512
-    dotprod_AVX_128B; 16.481
-    dotprod_AVX_256B; 16.497
+     dotprod_SSE_16B; 24.096
+     dotprod_SSE_32B; 36.384
+     dotprod_SSE_64B; 35.193
+     dotprod_AVX_32B; 40.792
+     dotprod_AVX_64B; 40.775
+    dotprod_AVX_128B; 41.748
+    dotprod_AVX_256B; 41.910

@@ -1,8 +1,8 @@
-        load_SSE_16B; 16.115
-        load_SSE_32B; 16.482
-        load_SSE_64B; 16.475
-       load_SSE_128B; 16.414
-        load_AVX_32B; 18.666
-        load_AVX_64B; 18.834
-       load_AVX_128B; 18.840
-       load_AVX_256B; 18.843
+        load_SSE_16B; 25.250
+        load_SSE_32B; 38.418
+        load_SSE_64B; 38.237
+       load_SSE_128B; 38.425
+        load_AVX_32B; 50.167
+        load_AVX_64B; 50.451
+       load_AVX_128B; 50.415
+       load_AVX_256B; 50.388

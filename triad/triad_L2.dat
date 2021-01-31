@@ -1,7 +1,7 @@
-       triad_SSE_16B; 37.252
-       triad_SSE_32B; 43.242
-       triad_SSE_64B; 43.884
-       triad_AVX_32B; 48.934
-       triad_AVX_64B; 48.852
-      triad_AVX_128B; 48.845
-      triad_AVX_256B; 48.976
+       triad_SSE_16B; 37.205
+       triad_SSE_32B; 42.784
+       triad_SSE_64B; 43.876
+       triad_AVX_32B; 48.971
+       triad_AVX_64B; 48.871
+      triad_AVX_128B; 48.890
+      triad_AVX_256B; 48.994
