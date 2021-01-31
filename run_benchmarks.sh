@@ -195,6 +195,7 @@ function triad_benchmark() {
 }
 
 
+# Main
 if [ $# -gt 0 ]; then
 	for bench in $@; do
 		case $bench in
@@ -233,3 +234,8 @@ if [ $# -gt 0 ]; then
 else
 	echo "usage: sudo sh bash.sh [all | bechmark_names..]"
 fi
+
+# Restarting NetworkManager
+systemctl start NetworkManager --now
+cpupower frequency-set -g powersave
+
