@@ -45,6 +45,7 @@ numactl -H > system/cpu/numactl.txt
 
 # Populating the caches directory
 cat /sys/devices/system/cpu/cpu*/cache/index*/* > system/caches/all.txt
+lscpu | grep "cache" > system/caches/sizes.txt
 
 # Populating the memory directory
 cat /proc/meminfo > system/memory/info.txt
@@ -57,14 +58,14 @@ function load_benchmark() {
 	cd load
 	make clean
 	make
-	# Running "load" benchmark on 128 KiB of memoy (fits in L1 cache)
+	# Running "load" benchmark on 64 KiB of memoy (fits in L1 cache)
 	taskset -c 1 ./load_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > load_L1.dat
-	# Running "load" benchmark on 4 MiB of memory (fits in L2 cache)
-	taskset -c 2 ./load_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > load_L2.dat
-	# Running "load" benchmark on 16 MiB of memory (fits in L3 cache)
-	taskset -c 3 ./load_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > load_L3.dat
-	# Running "load" benchmark on 1 GiB of memory (fits in DRAM)
-	taskset -c 4 ./load_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > load_DRAM.dat
+	# Running "load" benchmark on 512 KiB of memory (fits in L2 cache)
+	taskset -c 2 ./load_SSE_AVX $(( 512 * 2**M0 )) 1000 | cut -d';' -f1,9 > load_L2.dat
+	# Running "load" benchmark on 2 MiB of memory (fits in L3 cache)
+	taskset -c 3 ./load_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > load_L3.dat
+	# Running "load" benchmark on 7 MiB of memory (fits in DRAM)
+	taskset -c 4 ./load_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > load_DRAM.dat
 	# Drawing the load benchmark plot
 	cd ..
 	gnuplot -c "plot_load_bw.gp" > load_bw.png
@@ -78,14 +79,14 @@ function store_benchmark() {
 	cd store/
 	make clean
 	make
-	# Running "store" benchmark on 128 KiB of memoy (fits in L1 cache)
+	# Running "store" benchmark on 64 KiB of memoy (fits in L1 cache)
 	taskset -c 1 ./store_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > store_L1.dat
-	# Running "store" benchmark on 4 MiB of memoy (fits in L2 cache)
-	taskset -c 2 ./store_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > store_L2.dat
-	# Running "store" benchmark on 16 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./store_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > store_L3.dat
-	# Running "store" benchmark on 1 GiB of memoy (fits in DRAM)
-	taskset -c 4 ./store_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > store_DRAM.dat
+	# Running "store" benchmark on 512 KiB of memoy (fits in L2 cache)
+	taskset -c 2 ./store_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > store_L2.dat
+	# Running "store" benchmark on 2 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./store_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > store_L3.dat
+	# Running "store" benchmark on 7 MiB of memoy (fits in DRAM)
+	taskset -c 4 ./store_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > store_DRAM.dat
 	# Drawing the store benchmark plot
 	cd ..
 	gnuplot -c "plot_store_bw.gp" > store_bw.png
@@ -99,10 +100,10 @@ function ntstore_benchmark() {
 	cd ntstore/
 	make clean
 	make
-	# Running "ntstore" benchmark on 1 GiB of memoy
-	taskset -c 1 ./ntstore_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > ntstore_DRAM_1.dat
-	# Running "ntstore" benchmark on 2 GiB of memoy
-	taskset -c 2 ./ntstore_SSE_AVX $(( 2 * 2**30 )) 10 | cut -d';' -f1,9 > ntstore_DRAM_2.dat
+	# Running "ntstore" benchmark on 8 MiB of memoy
+	taskset -c 1 ./ntstore_SSE_AVX $(( 8 * 2**20 )) 1000 | cut -d';' -f1,9 > ntstore_DRAM_1.dat
+	# Running "ntstore" benchmark on 16 MiB of memoy
+	taskset -c 2 ./ntstore_SSE_AVX $(( 16 * 2**20 )) 1000 | cut -d';' -f1,9 > ntstore_DRAM_2.dat
 	# Drawing the ntstore benchmark plot
 	cd ..
 	gnuplot -c "plot_nstore_bw.gp" > ntstore_bw.png
@@ -116,14 +117,14 @@ function copy_benchmark() {
 	cd copy/
 	make clean
 	make
-	# Running "copy" benchmark on 128 KiB of memoy (fits in L1 cache)
-	taskset -c 1 ./copy_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > copy_L1.dat
-	# Running "copy" benchmark on 4 MiB of memoy (fits in L2 cache)
-	taskset -c 2 ./copy_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > copy_L2.dat
-	# Running "copy" benchmark on 16 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./copy_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > copy_L3.dat
-	# Running "copy" benchmark on 1 GiB of memoy (fits in DRAM)
-	taskset -c 4 ./copy_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > copy_DRAM.dat
+	# Running "copy" benchmark on 64 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./copy_SSE_AVX $(( 64 * 2**10 )) 1000 | cut -d';' -f1,9 > copy_L1.dat
+	# Running "copy" benchmark on 512 KiB of memoy (fits in L2 cache)
+	taskset -c 2 ./copy_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > copy_L2.dat
+	# Running "copy" benchmark on 2 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./copy_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > copy_L3.dat
+	# Running "copy" benchmark on 7 MiB of memoy (fits in DRAM)
+	taskset -c 4 ./copy_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > copy_DRAM.dat
 	# Drawing the copy benchmark plot
 	cd ..
 	gnuplot -c "plot_copy_bw.gp" > copy_bw.png
@@ -137,14 +138,14 @@ function memcpy_benchmark() {
 	cd memcpy/
 	make clean
 	make
-	# Running "memcpy" benchmark on 128 KiB of memoy (fits in L1 cache)
-	taskset -c 1 ./memcpy $(( 128 * 2**10 )) 1000 > memcpy_L1.dat
-	# Running "memcpy" benchmark on 4 MiB of memoy (fits in L2 cache)
-	taskset -c 2 ./memcpy $(( 4 * 2**20 )) 500 > memcpy_L2.dat
-	# Running "memcpy" benchmark on 16 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./memcpy $(( 16 * 2**20 )) 100 > memcpy_L3.dat
-	# Running "memcpy" benchmark on 1 GiB of memoy (fits in DRAM)
-	taskset -c 4 ./memcpy $(( 1 * 2**30 )) 10 > memcpy_DRAM.dat
+	# Running "memcpy" benchmark on 64 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./memcpy $(( 64 * 2**10 )) 1000 > memcpy_L1.dat
+	# Running "memcpy" benchmark on 512 KiB of memoy (fits in L2 cache)
+	taskset -c 2 ./memcpy $(( 512 * 2**10 )) 1000 > memcpy_L2.dat
+	# Running "memcpy" benchmark on 2 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./memcpy $(( 2 * 2**20 )) 1000 > memcpy_L3.dat
+	# Running "memcpy" benchmark on 7 MiB of memoy (fits in DRAM)
+	taskset -c 4 ./memcpy $(( 7 * 2**20 )) 1000 > memcpy_DRAM.dat
 	# TODO: Drawing the memcpy benchmark plot
 	cd ..
 
@@ -158,10 +159,10 @@ function pc_benchmark() {
 	cd pc/
 	make clean
 	make
-	# Running "pc" benchmark on 128 MiB of memoy
-	taskset -c 1 ./pc $(( 128 * 2**20 )) 100 > pc_DRAM_1.dat
-	# Running "pc" benchmark on 512 MiB of memoy
-	taskset -c 2 ./pc $(( 512 * 2**20 )) 100 > pc_DRAM_2.dat
+	# Running "pc" benchmark on 8 MiB of memoy
+	taskset -c 1 ./pc $(( 8 * 2**20 )) 1000 > pc_DRAM_1.dat
+	# Running "pc" benchmark on 16 MiB of memoy
+	taskset -c 2 ./pc $(( 16 * 2**20 )) 1000 > pc_DRAM_2.dat
 	# TODO: Drawing the pc benchmark plot
 
 	cd ..
@@ -175,14 +176,14 @@ function reduc_benchmark() {
 	cd reduc/
 	make clean
 	make
-	# Running "reduc" benchmark on 128 KiB of memoy (fits in L1 cache)
-	taskset -c 1 ./reduc_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > reduc_L1.dat
-	# Running "reduc" benchmark on 4 MiB of memoy (fits in L2 cache)
-	taskset -c 2 ./reduc_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > reduc_L2.dat
-	# Running "reduc" benchmark on 16 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./reduc_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > reduc_L3.dat
-	# Running "reduc" benchmark on 1 GiB of memoy (fits in DRAM)
-	taskset -c 4 ./reduc_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > reduc_DRAM.dat
+	# Running "reduc" benchmark on 64 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./reduc_SSE_AVX $(( 64 * 2**10 )) 1000 | cut -d';' -f1,9 > reduc_L1.dat
+	# Running "reduc" benchmark on 512 KiB of memoy (fits in L2 cache)
+	taskset -c 2 ./reduc_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > reduc_L2.dat
+	# Running "reduc" benchmark on 2 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./reduc_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > reduc_L3.dat
+	# Running "reduc" benchmark on 7 MiB of memoy (fits in DRAM)
+	taskset -c 4 ./reduc_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > reduc_DRAM.dat
 	# Drawing the reduc benchmark plot
 	cd ..
 	gnuplot -c "plot_reduc_bw.gp" > reduc_bw.png
@@ -196,14 +197,14 @@ function dp_benchmark() {
 	cd dotprod/
 	make clean
 	make
-	# Running "dotprod" benchmark on 128 KiB of memoy (fits in L1 cache)
-	taskset -c 1 ./dotprod_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > dotprod_L1.dat
-	# Running "dotprod" benchmark on 4 MiB of memoy (fits in L2 cache)
-	taskset -c 2 ./dotprod_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > dotprod_L2.dat
-	# Running "dotprod" benchmark on 16 MiB of memoy (fits in L3 cache)
-	taskset -c 3 ./dotprod_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > dotprod_L3.dat
-	# Running "dotprod" benchmark on 1 GiB of memoy (fits in DRAM)
-	taskset -c 4 ./dotprod_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > dotprod_DRAM.dat
+	# Running "dotprod" benchmark on 64 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./dotprod_SSE_AVX $(( 64 * 2**10 )) 1000 | cut -d';' -f1,9 > dotprod_L1.dat
+	# Running "dotprod" benchmark on 512 KiB of memoy (fits in L2 cache)
+	taskset -c 2 ./dotprod_SSE_AVX $(( 512 * 2**10 )) 1000 | cut -d';' -f1,9 > dotprod_L2.dat
+	# Running "dotprod" benchmark on 2 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./dotprod_SSE_AVX $(( 2 * 2**20 )) 1000 | cut -d';' -f1,9 > dotprod_L3.dat
+	# Running "dotprod" benchmark on 7 MiB of memoy (fits in DRAM)
+	taskset -c 4 ./dotprod_SSE_AVX $(( 7 * 2**20 )) 1000 | cut -d';' -f1,9 > dotprod_DRAM.dat
 	# Drawing the dotprod benchmark plot
 	cd ..
 	gnuplot -c "plot_dotprod_bw.gp" > dotprod_bw.png
