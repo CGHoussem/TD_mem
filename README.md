@@ -1,21 +1,27 @@
 # Measuring/Evaluating the performance of a computer system using benchmarks
 
-## Execution of the benchmark
+## 1. Execution of the benchmark
+### 1.1. Adding execution permission to the bash script
+```bash
+sudo chmod +x run_benchmarks.sh
+```
+### 1.2. Ways of execution of benchmarks
 Execution of all benchmarks:
 ```bash
-sudo sh run_benchmarks.sh all
+sudo ./run_benchmarks.sh all
 ```
 
 Execution of 'load' benchmark:
 ```bash
-sudo sh run_benchmarks.sh load
+sudo ./run_benchmarks.sh load
 ```
 
 Execution of 'load' and 'store' benchmarks:
 ```bash
-sudo sh run_benchmarks.sh load store
+sudo ./run_benchmarks.sh load store
 ```
 
+## 2. Available benchmarks
 The module names that could be benchmarked:
 * load (DONE)
 * store (DONE)
@@ -28,6 +34,7 @@ The module names that could be benchmarked:
 * triad (DONE)
 
 
+## 3. TODO List
 The TODO list:
 * memcpy :
 	* Drawing the benchmark plot
