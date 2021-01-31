@@ -185,8 +185,24 @@ function reduc_benchmark() {
 }
 
 function dp_benchmark() {
-	# TODO: dotprod benchmark
-	:
+	# ==================================
+	# ======= dotprod benchmark ========
+	# ==================================
+	# Building the "dotprod" benchmark binary
+	cd dotprod/
+	make clean
+	make
+	# Running "dotprod" benchmark on 128 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./dotprod_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > dotprod_L1.dat
+	# Running "dotprod" benchmark on 4 MiB of memoy (fits in L2 cache)
+	taskset -c 2 ./dotprod_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > dotprod_L2.dat
+	# Running "dotprod" benchmark on 16 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./dotprod_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > dotprod_L3.dat
+	# Running "dotprod" benchmark on 1 GiB of memoy (fits in DRAM)
+	taskset -c 4 ./dotprod_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > dotprod_DRAM.dat
+	# Drawing the dotprod benchmark plot
+	cd ..
+	gnuplot -c "plot_dotprod_bw.gp" > dotprod_bw.png
 }
 
 function triad_benchmark() {

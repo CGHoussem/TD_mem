@@ -523,7 +523,7 @@ Group Associations
 Handle 0x002B, DMI type 219, 81 bytes
 HP ProLiant Information
 	Power Features: 0x45010301
-	Omega Features: 0x06a00000
+	Omega Features: 0x06900002
 	Misc. Features: 0x00000000
 		iCRU: No
 		UEFI: No
