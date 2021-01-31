@@ -11,4 +11,5 @@ all: memcpy
 memcpy: $(FILES)
 	$(GCC) $(CFLAGS) $(OFLAGS) $(FILES) -o $@ -lm
 
-clean: rm -Rf memcpy
+clean: 
+	rm -Rf memcpy
