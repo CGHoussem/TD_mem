@@ -23,7 +23,7 @@ The module names that could be benchmarked:
 * copy (DONE)
 * memcpy (DOING)
 * pc (DOING)
-* reduc (TODO)
+* reduc (DONE)
 * dp (dotprod) (TODO)
 * triad (TODO)
 
@@ -32,10 +32,6 @@ The TODO list:
 * memcpy :
 	* Drawing the benchmark plot
 * pc :
-	* Drawing the benchmark plot
-* reduc :
-	* Adding the bash function
-	* Running the benchmark
 	* Drawing the benchmark plot
 * dotprod :
 	* Adding the bash function

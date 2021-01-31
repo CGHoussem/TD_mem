@@ -164,8 +164,24 @@ function pc_benchmark() {
 }
 
 function reduc_benchmark() {
-	# TODO: reduc benchmark
-	:
+	# ==================================
+	# ======== reduc benchmark =========
+	# ==================================
+	# Building the "reduc" benchmark binary
+	cd reduc/
+	make clean
+	make
+	# Running "reduc" benchmark on 128 KiB of memoy (fits in L1 cache)
+	taskset -c 1 ./reduc_SSE_AVX $(( 128 * 2**10 )) 1000 | cut -d';' -f1,9 > reduc_L1.dat
+	# Running "reduc" benchmark on 4 MiB of memoy (fits in L2 cache)
+	taskset -c 2 ./reduc_SSE_AVX $(( 4 * 2**20 )) 500 | cut -d';' -f1,9 > reduc_L2.dat
+	# Running "reduc" benchmark on 16 MiB of memoy (fits in L3 cache)
+	taskset -c 3 ./reduc_SSE_AVX $(( 16 * 2**20 )) 100 | cut -d';' -f1,9 > reduc_L3.dat
+	# Running "reduc" benchmark on 1 GiB of memoy (fits in DRAM)
+	taskset -c 4 ./reduc_SSE_AVX $(( 1 * 2**30 )) 10 | cut -d';' -f1,9 > reduc_DRAM.dat
+	# Drawing the reduc benchmark plot
+	cd ..
+	gnuplot -c "plot_reduc_bw.gp" > reduc_bw.png
 }
 
 function dp_benchmark() {
