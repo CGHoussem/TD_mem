@@ -17,20 +17,24 @@ set boxwidth 0.9
 
 set xtic rotate by -45 scale 0
 
-set multiplot layout 2, 2 rowsfirst
+set multiplot layout 2,1 rowsfirst
 
-set yrange [0:60]
+set datafile separator ";"
 
-set title "L1 cache"
-plot "store/store_L1.dat" u 2:xtic(1) t "Intel Core i5-8250U"
+set yrange [0:80]
 
-set title "L2 cache"
-plot "store/store_L2.dat" u 2:xtic(1) t "Intel Core i5-8250U"
+plot 	"store/store_L1.dat" u 3:xtic(1) t "Intel Core i5-8250U (L1 - 64 KiB)", \
+	"store/store_L2.dat" u 3:xtic(1) t "Intel Core i5-8250U (L2 - 512 KiB)", \
+	"store/store_L3.dat" u 3:xtic(1) t "Intel Core i5-8250U (L3 - 2 MiB)", \
+	"store/store_DRAM.dat" u 3:xtic(1) t "Intel Core i5-8250U (DRAM - 8 MiB)"
 
-set title "L3 cache"
-plot "store/store_L3.dat" u 2:xtic(1) t "Intel Core i5-8250U"
+set title "Intel(R) Core(TM) i5-8250U CPU @ 1.60 GHz deviation percentage for a store benchmark on a single array"
 
-set title "DRAM"
-plot "store/store_DRAM.dat" u 2:xtic(1) t "Intel Core i5-8250U"
+set yrange [0:8]
+
+plot 	"store/store_L1.dat" u 2:xtic(1) t "Intel Core i5-8250U (L1 - 64 KiB)", \
+	"store/store_L2.dat" u 2:xtic(1) t "Intel Core i5-8250U (L2 - 512 KiB)", \
+	"store/store_L3.dat" u 2:xtic(1) t "Intel Core i5-8250U (L3 - 2 MiB)", \
+	"store/store_DRAM.dat" u 2:xtic(1) t "Intel Core i5-8250U (DRAM - 8 MiB)"
 
 unset multiplot
