@@ -3,7 +3,7 @@ clear
 
 # Stop NetworkManager
 echo "Stopping NetworkManager.."
-systemctl stop NetworkManager
+systemctl stop NetworkManager --now
 
 # Gathering compilers versions
 echo "Gathering compiler version.."
